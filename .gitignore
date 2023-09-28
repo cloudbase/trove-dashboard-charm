@@ -1,0 +1,8 @@
+build/
+.local/
+.coverage
+.testrepository/
+.tox/
+*.pyc
+func-results.json
+test-charm/
