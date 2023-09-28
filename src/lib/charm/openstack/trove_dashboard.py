@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import charms_openstack.adapters
 import charms_openstack.charm
 
 
@@ -26,3 +27,10 @@ class TroveDashboardCharm(charms_openstack.charm.OpenStackCharm):
     packages = ['python3-trove-dashboard']
 
     required_relations = ['dashboard']
+
+    # The base class was not updated to support only Python3. If we don't
+    # specify this, python-memcache would be installed instead of
+    # python3-memcache, which would result in an error in the install phase.
+    python_version = 3
+
+    adapters_class = charms_openstack.adapters.OpenStackRelationAdapters

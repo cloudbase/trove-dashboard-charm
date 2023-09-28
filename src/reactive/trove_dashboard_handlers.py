@@ -12,8 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import charmhelpers.core.hookenv as hookenv
+import charms_openstack.bus
 import charms_openstack.charm as charm
+import charms.reactive as reactive
 
+
+charms_openstack.bus.discover()
 
 charm.use_defaults(
     'charm.installed',
@@ -21,3 +26,20 @@ charm.use_defaults(
     'update-status',
     'upgrade-charm',
 )
+
+
+@reactive.when('dashboard.available')
+def dashboard_available():
+    """Relation to OpenStack Dashboard principal charm complete."""
+
+    with charm.provide_charm_instance() as dashboard_charm:
+        dashboard = reactive.endpoint_from_flag('dashboard.available')
+        hookenv.log(f'DEBUG: dashboard_available "{dashboard.release}" '
+                    f'"{dashboard.bin_path}" "{dashboard.openstack_dir}"')
+        dashboard.publish_plugin_info(
+            "",
+            None,
+            conflicting_packages=[],
+            install_packages=dashboard_charm.packages,
+        )
+        dashboard_charm.assess_status()

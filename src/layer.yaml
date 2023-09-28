@@ -1,5 +1,17 @@
-includes: ['layer:openstack-api']
+includes:
+  - layer:openstack
+  - interface:dashboard-plugin
 options:
   basic:
     use_venv: True
-    include_system_packages: True
+    include_system_packages: False
+repo: https://github.com/cloudbase/trove-dashboard-charm
+config:
+  deletes:
+    - debug
+    - verbose
+    - use-internal-endpoints
+    - use-syslog
+    - ssl_ca
+    - ssl_cert
+    - ssl_key

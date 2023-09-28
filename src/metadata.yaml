@@ -1,9 +1,15 @@
 name: trove-dashboard
-maintainer: example@example.com
-summary: Short summary of charm
+maintainer: Cloudbase Solutions <info@cloudbasesolutions.com>
+summary: OpenStack database-as-a-service Dashboard
 description: |
-  Longline summary of charm
+  This is the dashboard for the OpenStack DBaaS service, Trove.
 tags:
   - openstack
 series:
-  - xenial
+  - focal
+  - jammy
+subordinate: true
+requires:
+  dashboard:
+    interface: dashboard-plugin
+    scope: container
